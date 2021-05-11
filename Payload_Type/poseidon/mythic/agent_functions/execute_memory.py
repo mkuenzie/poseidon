@@ -30,10 +30,10 @@ class ExecuteMemoryArguments(TaskArguments):
 class ExecuteMemoryCommand(CommandBase):
     cmd = "execute_memory"
     needs_admin = False
-    help_cmd = "upload"
+    help_cmd = "execute_memory"
     description = "Upload a binary into memory and execute a function in-proc"
     version = 1
-    author = "@xorrior"
+    author = "@its_a_feature_"
     argument_class = ExecuteMemoryArguments
     attributes = CommandAttributes(
         # uncomment when poseidon can dynamically compile commands
