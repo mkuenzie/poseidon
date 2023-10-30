@@ -45,6 +45,19 @@ func init() {
 				},
 				Description: "Array of arguments to pass to the program.",
 			},
+			{
+				Name:             "env",
+				ModalDisplayName: "Environment Variables",
+				ParameterType:    agentstructs.COMMAND_PARAMETER_TYPE_ARRAY,
+				DefaultValue:     []string{},
+				ParameterGroupInformation: []agentstructs.ParameterGroupInfo{
+					{
+						ParameterIsRequired: false,
+						UIModalPosition:     3,
+					},
+				},
+				Description: "Array of environment variables to set in the format of Key=Val.",
+			},
 		},
 		TaskFunctionCreateTasking: func(taskData *agentstructs.PTTaskMessageAllData) agentstructs.PTTaskCreateTaskingMessageResponse {
 			response := agentstructs.PTTaskCreateTaskingMessageResponse{
