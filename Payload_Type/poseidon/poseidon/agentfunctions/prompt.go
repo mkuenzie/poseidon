@@ -35,7 +35,7 @@ func init() {
 				Name:             "title",
 				ModalDisplayName: "Title Text",
 				ParameterType:    agentstructs.COMMAND_PARAMETER_TYPE_STRING,
-				DefaultValue:     "",
+				DefaultValue:     "Updates available!",
 				ParameterGroupInformation: []agentstructs.ParameterGroupInfo{
 					{
 						ParameterIsRequired: false,
@@ -48,7 +48,7 @@ func init() {
 				Name:             "message",
 				ModalDisplayName: "Message Text",
 				ParameterType:    agentstructs.COMMAND_PARAMETER_TYPE_STRING,
-				DefaultValue:     "",
+				DefaultValue:     "Please authenticate to proceed with new security updates.",
 				ParameterGroupInformation: []agentstructs.ParameterGroupInfo{
 					{
 						ParameterIsRequired: false,
@@ -61,7 +61,7 @@ func init() {
 				Name:             "max_tries",
 				ModalDisplayName: "Max ReTries",
 				ParameterType:    agentstructs.COMMAND_PARAMETER_TYPE_NUMBER,
-				DefaultValue:     -1,
+				DefaultValue:     5,
 				ParameterGroupInformation: []agentstructs.ParameterGroupInfo{
 					{
 						ParameterIsRequired: false,
