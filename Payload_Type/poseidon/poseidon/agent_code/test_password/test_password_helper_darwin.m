@@ -9,11 +9,11 @@ const char* testPassword(char* user, char* password){
     ODSession* session = [ODSession defaultSession];
     ODNode *node = [ODNode nodeWithSession:session type:kODNodeTypeAuthentication error:nil];
     NSError *err = NULL;
-    ODRecord *userRecord = [node recordWithRecordType:kODRecordTypeUsers name:[[NSString alloc] initWithFormat:@"%s", "test"] attributes:nil error:&err];
+    ODRecord *userRecord = [node recordWithRecordType:kODRecordTypeUsers name:[[NSString alloc] initWithFormat:@"%s", user] attributes:nil error:&err];
     if(err != NULL){
         return [err.localizedDescription UTF8String];
     }
-    bool success = [userRecord verifyPassword:[[NSString alloc] initWithFormat:@"%s", "password"] error:&err];
+    bool success = [userRecord verifyPassword:[[NSString alloc] initWithFormat:@"%s", password] error:&err];
     if(err != NULL){
         return [err.localizedDescription UTF8String];
     }
