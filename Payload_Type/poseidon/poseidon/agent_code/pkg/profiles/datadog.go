@@ -604,7 +604,7 @@ func newDatadogClient(region string, apiKey string, appKey string) *DatadogClien
 
 func (c *DatadogClient) writeCase(ctx context.Context, data string) (string, error) {
 	title := fmt.Sprintf("msg_%d", time.Now().Unix())
-	caseId, _, err := c.createCase(ctx, title, CaseTypeCase, c.ProjectId)
+	caseId, _, err := c.createCase(ctx, title, "00000000-0000-0000-0000-000000000001", c.ProjectId)
 	if err != nil {
 		return caseId, err
 	}
