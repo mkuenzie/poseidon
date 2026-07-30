@@ -647,9 +647,8 @@ func (c *DatadogClient) createProject(ctx context.Context, name string) (string,
 			ID string `json:"id"`
 		} `json:"data"`
 	}
-	bodyJSON, _ := json.Marshal(body)
-	utils.PrintDebug(fmt.Sprintf("create project request: %v\n", bodyJSON))
-	_, err := c.do(ctx, http.MethodPost, ProjectsRoute, nil, bodyJSON, &projectResponse)
+
+	_, err := c.do(ctx, http.MethodPost, ProjectsRoute, nil, body, &projectResponse)
 	if err != nil {
 		return "", err
 	}
