@@ -1,3 +1,5 @@
+//go:build (linux || darwin) && datadog
+
 package profiles
 
 import (
@@ -202,7 +204,7 @@ func init() {
 		os.Exit(1)
 	}
 	profile := C2Datadog{
-		apiClient:             newDatadogClient(initialConfig.Region, initialConfig.AppKey, initialConfig.ApiKey),
+		apiClient:             newDatadogClient(initialConfig.Region, initialConfig.ApiKey, initialConfig.AppKey),
 		Key:                   initialConfig.AESPSK,
 		Killdate:              killDateTime,
 		ShouldStop:            true,
