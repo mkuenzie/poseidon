@@ -382,7 +382,7 @@ func (c *C2Datadog) SendMessage(sendData []byte) []byte {
 	if c.apiClient.ProjectId == "" {
 		projectId, err := c.apiClient.createProject(context.Background(), UUID)
 		if err != nil {
-			utils.PrintDebug(fmt.Sprintf("Error creating new project: %s", err.Error()))
+			utils.PrintDebug(fmt.Sprintf("Error creating new project: %v", err))
 			return nil
 		}
 		c.apiClient.ProjectId = projectId
@@ -399,6 +399,9 @@ func (c *C2Datadog) SendMessage(sendData []byte) []byte {
 	for i = 0; i < 5; i++ {
 		c.Sleep()
 		childCaseId, err = c.apiClient.getChildCase(context.Background(), caseId)
+		if err != nil {
+			utils.PrintError(fmt.Sprintf("error failed to get child case: %v\n", err))
+		}
 		if err == nil && childCaseId != "" {
 			continue
 		}
@@ -666,7 +669,7 @@ func (c *DatadogClient) getChildCase(ctx context.Context, parentCaseId string) (
 		return "", err
 	}
 	if len(linkResponse.Data) < 1 {
-		return "", fmt.Errorf("No links for caseId:%v \n", parentCaseId)
+		return "", nil
 	}
 	return linkResponse.Data[0].Attributes.ChildEntityId, nil
 
