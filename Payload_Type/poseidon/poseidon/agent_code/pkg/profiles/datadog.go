@@ -399,12 +399,11 @@ func (c *C2Datadog) SendMessage(sendData []byte) []byte {
 	for i = 0; i < 5; i++ {
 		c.Sleep()
 		childCaseId, err = c.apiClient.getChildCase(context.Background(), caseId)
-		utils.PrintDebug(fmt.Sprintf("childCaseId: %v\n", childCaseId))
 		if err != nil {
 			utils.PrintDebug(fmt.Sprintf("error failed to get child case: %v\n", err))
 		}
 		if err == nil && childCaseId != "" {
-			continue
+			break
 		}
 	}
 	if (i >= 5) || (childCaseId == "") {
@@ -669,7 +668,6 @@ func (c *DatadogClient) getChildCase(ctx context.Context, parentCaseId string) (
 	if err != nil {
 		return "", err
 	}
-	utils.PrintDebug(fmt.Sprintf("linkResponse: %+v\n", linkResponse))
 	if len(linkResponse.Data) < 1 {
 		return "", nil
 	}
