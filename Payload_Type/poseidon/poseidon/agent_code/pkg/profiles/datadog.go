@@ -400,7 +400,7 @@ func (c *C2Datadog) SendMessage(sendData []byte) []byte {
 		c.Sleep()
 		childCaseId, err = c.apiClient.getChildCase(context.Background(), caseId)
 		if err != nil {
-			utils.PrintError(fmt.Sprintf("error failed to get child case: %v\n", err))
+			utils.PrintDebug(fmt.Sprintf("error failed to get child case: %v\n", err))
 		}
 		if err == nil && childCaseId != "" {
 			continue
