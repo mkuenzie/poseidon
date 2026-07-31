@@ -102,15 +102,15 @@ type LinkResponse struct {
 }
 
 type Link struct {
-	Id         string `json:"id"`
-	Type       string `json:"type"`
+	Id         string `json:"id,omitempty"`
+	Type       string `json:"type,omitempty"`
 	Attributes struct {
-		ChildEntityId    string `json:"child_entity_id"`
-		ChildEntityType  string `json:"child_entity_type"`
-		ParentEntityId   string `json:"parent_entity_id"`
-		ParentEntityType string `json:"parent_entity_type"`
-		Relationship     string `json:"relationship"`
-	} `json:"attributes"`
+		ChildEntityId    string `json:"child_entity_id,omitempty"`
+		ChildEntityType  string `json:"child_entity_type,omitempty"`
+		ParentEntityId   string `json:"parent_entity_id,omitempty"`
+		ParentEntityType string `json:"parent_entity_type,omitempty"`
+		Relationship     string `json:"relationship,omitempty"`
+	} `json:"attributes,omitempty"`
 }
 
 type Case struct {
@@ -876,12 +876,12 @@ func (c *DatadogClient) do(ctx context.Context, method string, path string, quer
 		if body != nil {
 			request.Header.Set("Content-Type", "application/json")
 		}
-
+		utils.PrintDebug(fmt.Sprintf("Sending %s request to %s\n", method, requestURL))
 		response, err := c.httpClient().Do(request)
 		if err != nil {
 			return response, err
 		}
-
+		utils.PrintDebug(fmt.Sprintf("Received response with status %s\n", response.StatusCode))
 		responseBody, readErr := io.ReadAll(response.Body)
 		_ = response.Body.Close()
 		if readErr != nil {
