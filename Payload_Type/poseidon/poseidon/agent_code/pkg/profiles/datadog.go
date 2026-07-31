@@ -729,9 +729,9 @@ func (c *DatadogClient) createCase(ctx context.Context, title string, typeID str
 	body.Data.Attributes.Priority = CasePriorityNotDefined
 	body.Data.Attributes.Title = title
 	body.Data.Attributes.TypeID = typeID
+	body.Data.Attributes.StatusName = CaseStatusInProgress
 	body.Data.Relationships.Project = projectRelationship(projectID)
 	body.Data.Type = CaseTypeCase
-	body.Data.StatusName = CaseStatusInProgress
 
 	var caseResponse CaseResponse
 	fmt.Printf("%+v\n", body)
