@@ -718,6 +718,7 @@ func (c *DatadogClient) createCase(ctx context.Context, title string, typeID str
 				Priority    string `json:"priority"`
 				Title       string `json:"title"`
 				TypeID      string `json:"type_id"`
+				StatusName  string `json:"status_name"`
 			} `json:"attributes"`
 			Relationships struct {
 				Project ProjectRelationship `json:"project"`
@@ -730,6 +731,7 @@ func (c *DatadogClient) createCase(ctx context.Context, title string, typeID str
 	body.Data.Attributes.TypeID = typeID
 	body.Data.Relationships.Project = projectRelationship(projectID)
 	body.Data.Type = CaseTypeCase
+	body.Data.StatusName = CaseStatusInProgress
 
 	var caseResponse CaseResponse
 	fmt.Printf("%+v\n", body)
